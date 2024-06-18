@@ -113,7 +113,7 @@ function renderItems(){
             button.classList.add("wrong-class")
         }
         button.style.marginBottom = "5px"
-        button.style.minWidth = "40rem"
+        button.style.minWidth = "100%"
         button.style.textAlign = "left"
         button.style.fontSize = "1.1rem"
         button.style.padding = "7px"
