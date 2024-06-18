@@ -1,6 +1,10 @@
 const questionContainer = document.getElementById("question");
 const buttonsContainer = document.getElementById("buttons");
 const nbutton = document.getElementById("next");
+const smallScreen = window.matchMedia("(max-width: 600px)");
+const mediumScreen = window.matchMedia("(min-width: 601px) and (max-width: 1024px)");
+const largeScreen = window.matchMedia("(min-width: 1025px)");
+
 const questions = [
     {
         question: "Which is the largest animal in the world?",
@@ -95,7 +99,9 @@ const questions = [
 ];
 index = 0
 points = 0
+
 function renderItems(){
+    flag = 0
     buttonsContainer.innerHTML = ''
     nbutton.innerHTML = ''
     const btncontainer = document.createElement("div")
@@ -125,40 +131,36 @@ function renderItems(){
     buttonsContainer.appendChild(btncontainer)
 }
 function handleButtonClick(event){
-    index++
     let currentbutton = event.target
     let isTrue = currentbutton.dataset.correct === "true"
+    nbutton.innerHTML = ''
     if(isTrue){     
-        points++
-        currentbutton.style.backgroundColor = 'rgb(3, 206, 3)'
-        const next = document.createElement("button")
-        next.textContent = "Next"
-        next.style.marginTop = "5px"
-        next.style.minWidth = "6rem"
-        next.style.textAlign = "center"
-        next.style.fontSize = "1.1rem"
-        next.style.borderWidth = "1px"
-        next.style.backgroundColor = "rgb(0, 22, 117)"
-        next.style.color = "white"
-        next.style.padding = "4px"
-        next.onclick = () => renderItems()
-        nbutton.appendChild(next)
+        if(flag === 0){
+            points++
+            currentbutton.style.backgroundColor = 'rgb(3, 206, 3)'
+            index++
+            flag =1
+        }
     }
     else{
-        currentbutton.style.backgroundColor = 'red'
-        const next = document.createElement("button")
-        next.textContent = "Next"
-        next.style.marginTop = "5px"
-        next.style.minWidth = "6rem"
-        next.style.textAlign = "center"
-        next.style.fontSize = "1.1rem"
-        next.style.borderWidth = "1px"
-        next.style.backgroundColor = "rgb(0, 22, 117)"
-        next.style.color = "white"
-        next.style.padding = "4px"
-        next.onclick = () => renderItems()
-        nbutton.appendChild(next)
-    }
+        if(flag === 0){
+            currentbutton.style.backgroundColor = 'red'
+            index++
+            flag = 1
+        }
+    }const next = document.createElement("button")
+    next.textContent = "Next"
+    next.style.marginTop = "5px"
+    next.style.minWidth = "6rem"
+    next.style.textAlign = "center"
+    next.style.fontSize = "1.1rem"
+    next.style.borderWidth = "1px"
+    next.style.backgroundColor = "rgb(0, 22, 117)"
+    next.style.color = "white"
+    next.style.padding = "4px"
+    next.onclick = () => renderItems()
+    nbutton.appendChild(next)
+    
     let checkInd = index === questions.length
     if(checkInd){
         nbutton.innerHTML = ''
